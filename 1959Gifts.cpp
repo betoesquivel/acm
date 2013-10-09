@@ -19,6 +19,20 @@
 #include <list>
 
 using namespace std; 
+
+template <class T>
+void printList(const list<T> &l)
+{
+
+	list<int>::iterator l_it;
+	cout<<"Printing the list."<<endl;
+	for(l_it = l.begin(); l_it!=l.end(); l++)
+	{
+		cout<<*l_it<<endl;
+	}
+	cout<<endl;
+	
+}
 int main()
 {
 	int numberOfCows, budget;
@@ -55,6 +69,7 @@ int main()
 			totalCosts.push_back(cowShippingCost);
 		}
 	}
+	printList(giftCosts);
 
 	int subTotal = 0, giftsAfforded = 0;
         int mostExpensiveGift, tentativeDiscount;
@@ -62,21 +77,28 @@ int main()
 
 	giftCosts_it = giftCosts.begin();
 	totalCosts_it = totalCosts.begin();
-	while(totalCosts_it != totalCosts.end() && (subTotal-tentativeDiscount) <= budget)
+	while(totalCosts_it != totalCosts.end() && subTotal <= budget)
 	{
 		subTotal += *totalCosts_it;
 		mostExpensiveGift = (*giftCosts_it > mostExpensiveGift) ? *giftCosts_it:mostExpensiveGift;
 		//discount = tentativeDiscount;
 		tentativeDiscount = mostExpensiveGift/2;
 
-		if((subTotal-tentativeDiscount)<=budget)
+		if(subTotal<=budget)
 		{
 			giftsAfforded++;
 			totalCosts_it++;
 			giftCosts_it++;
 		}
 	}
-	cout<<giftsAfforded-1<<endl;
+
+	if((subTotal-tentativeDiscount)<=budget)
+	{
+		giftsAfforded++;
+		totalCosts_it++;
+		giftCosts_it++;
+	}
+	cout<<giftsAfforded<<endl;
 }
 
 
