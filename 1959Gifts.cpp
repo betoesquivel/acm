@@ -20,13 +20,12 @@
 
 using namespace std; 
 
-template <class T>
-void printList(const list<T> &l)
+void printList(list<int> &l, string name)
 {
 
 	list<int>::iterator l_it;
-	cout<<"Printing the list."<<endl;
-	for(l_it = l.begin(); l_it!=l.end(); l++)
+	cout<<"Printing the list: "<<name<<endl;
+	for(l_it = l.begin(); l_it!=l.end(); l_it++)
 	{
 		cout<<*l_it<<endl;
 	}
@@ -60,16 +59,19 @@ int main()
 		{
 			giftCosts.insert(giftCosts_it, cowGiftCost);
 			shippingCosts.insert(shippingCosts_it, cowShippingCost);
+			cout<<"DEBUG::This is the total cost: "<<cowGiftTotalCost;
 			totalCosts.insert(totalCosts_it, cowGiftTotalCost);
 		}
 		else
 		{
 			giftCosts.push_back(cowGiftCost);
 			shippingCosts.push_back(cowShippingCost);
-			totalCosts.push_back(cowShippingCost);
+			totalCosts.push_back(cowGiftTotalCost);
 		}
 	}
-	printList(giftCosts);
+	printList(giftCosts, "giftCosts");
+	printList(shippingCosts, "shippingCosts");
+	printList(totalCosts, "totalCosts");
 
 	int subTotal = 0, giftsAfforded = 0;
         int mostExpensiveGift, tentativeDiscount;
