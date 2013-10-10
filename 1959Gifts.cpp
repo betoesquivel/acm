@@ -59,7 +59,6 @@ int main()
 		{
 			giftCosts.insert(giftCosts_it, cowGiftCost);
 			shippingCosts.insert(shippingCosts_it, cowShippingCost);
-			cout<<"DEBUG::This is the total cost: "<<cowGiftTotalCost;
 			totalCosts.insert(totalCosts_it, cowGiftTotalCost);
 		}
 		else
@@ -69,9 +68,6 @@ int main()
 			totalCosts.push_back(cowGiftTotalCost);
 		}
 	}
-	printList(giftCosts, "giftCosts");
-	printList(shippingCosts, "shippingCosts");
-	printList(totalCosts, "totalCosts");
 
 	int subTotal = 0, giftsAfforded = 0;
         int mostExpensiveGift, tentativeDiscount;
