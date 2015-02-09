@@ -19,7 +19,7 @@ int main(int argc, const char *argv[])
            break;
          case '*': response = (ans == a*b) ? "Yes":"No";
            break;
-         case '/': response = (ans == a/b) ? "Yes":"No";
+         case '/': response = (a!=0 && b!=0 && ans == a/b) ? "Yes":"No";
            break;
          default:
                    response = "No";
