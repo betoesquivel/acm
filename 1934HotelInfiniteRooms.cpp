@@ -1,5 +1,5 @@
+#include <cstdio>
 #include <cmath>
-#include <iostream>
 
 using namespace std;
 
@@ -13,10 +13,10 @@ int main(int argc, const char *argv[])
   long long int s;
   long long int d;
   long long int ans;
-  std::ios::sync_with_stdio(false);
-  while(cin >> s >> d){
+
+  while(scanf("%lld %lld", &s, &d) != 1){
     ans = calc(s, d);
-    cout << ans << endl;
+    printf("%lld\n", ans);
   }
 
   return 0;
