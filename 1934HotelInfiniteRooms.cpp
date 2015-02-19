@@ -4,8 +4,11 @@
 using namespace std;
 
 long long calc(long long s, long long d) {
-  double c = d + (s*s - s) / 2.0;
-  return ceil( (sqrt(8*c + 1) - 1) / 2.0 );
+  while(d > 0){
+    d -= s;
+    s++;
+  }
+  return s-1;
 }
 
 int main(int argc, const char *argv[])
@@ -14,7 +17,7 @@ int main(int argc, const char *argv[])
   long long int d;
   long long int ans;
 
-  while(scanf("%lld %lld", &s, &d) != 1){
+  while(scanf("%lld %lld", &s, &d) == 2){
     ans = calc(s, d);
     printf("%lld\n", ans);
   }
