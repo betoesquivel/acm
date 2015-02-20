@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <stack>
 
 using namespace std;
@@ -9,13 +10,14 @@ using namespace std;
 // While reading, if you found a smallest letter, read all other equal consecutive letters while counting.
 // This way I can provide a comparison of.
 
-string getCutPart(string s, int endIndex) {
+string getCutPart(string s, int endIndex, int *cutIndex) {
   string cut = "";
   stack<char> inverse;
 
   int min = 0, toPop = 0, minSize = 1;
   inverse.push(s[0]);
   for (int i = 1; i < endIndex; i++){
+    printf("Iteration %d, min %d\n", i, min);
     inverse.push(s[i]);
     toPop += 1;
 
@@ -32,6 +34,7 @@ string getCutPart(string s, int endIndex) {
         minSize++;
         i++;
       }
+      i -= 1;
 
     }else if ( s[i] == s[min] ) {
       int tmp = i;
@@ -54,16 +57,22 @@ string getCutPart(string s, int endIndex) {
       i -= 1;
 
     }
+    printf("Finished iteration %d, min %d, toPop %d\n", i, min, toPop);
 
   }
+  printf("Finished iterations\n ");
 
   while ( toPop > 0 ){
+    printf("Poping %c\n", inverse.top());
     inverse.pop();
+    toPop--;
   }
+  cout << endl;
   while ( !inverse.empty() ){
     cut += inverse.top();
     inverse.pop();
   }
+  *cutIndex = min;
   return cut;
 
 }
@@ -77,70 +86,17 @@ int main(int argc, const char *argv[])
   string input, output = "";
   cin >> input;
 
-  stack<char> inversePart;
 
   int len = input.length();
 
   int neededParts = 2;
+  int cutIndex = 0;
   while ( neededParts > 0 ){
 
-    int smallestIndex = 0;
-    int smallestIndexSize = 1;
-    int elementsToPop = 1;
-    int j;
-     inversePart.push(input[j]);
-     elementsToPop += 1;
-    for (j = 1; j < ( len-neededParts ); j++) {
-       inversePart.push(input[j]);
-       elementsToPop += 1;
-       if (input[j] < input[smallestIndex]) {
-         smallestIndex = j;
-         elementsToPop = 0;
-         smallestIndexSize = 1;
-         // eat all the same contiguous letters
-         for ( j = j+1; j < (len - neededParts) ; j++){
-             if(input[j] != input[smallestIndex]) { j-=1; break; }
-             smallestIndexSize+=1;
-             smallestIndex = j;
-             inversePart.push(input[j]);
-             elementsToPop += 1;
-         }
-       }else if (input[j] == input[smallestIndex]){
-         // found an equal smallest letter
-         // Now I have to keep the one that repeats itself the most
-         int indexRepetitions = 1;
-         int tempIndex = j;
-         for ( j = j+1; j < (len - neededParts) ; j++){
-             if(input[j] != input[tempIndex]) { break; }
-             indexRepetitions+=1;
-             tempIndex = j;
-             inversePart.push(input[j]);
-             elementsToPop += 1;
-         }
-         if (indexRepetitions > smallestIndexSize) {
-             smallestIndex = j - 1;
-             smallestIndexSize = indexRepetitions;
-             elementsToPop = 0;
-         }
+    output += getCutPart(input, len - neededParts, &cutIndex);
+    printf("%d cut: %s", cutIndex,  output.c_str());
 
-       }
-    }
-    // dcbagfekjih
-    // anakonda
-    // bbabbbdddxddddaa
-    while ( elementsToPop > 0 ){
-
-      inversePart.pop();
-      elementsToPop--;
-
-    }
-
-    while ( !inversePart.empty() ) {
-      output += inversePart.top();
-      inversePart.pop();
-    }
-
-    input = input.substr(smallestIndex + 1);
+    input = input.substr(cutIndex + 1);
     len = input.length();
     neededParts--;
 
