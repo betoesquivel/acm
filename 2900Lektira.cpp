@@ -63,7 +63,6 @@ string getCutPart(string s, int endIndex, int *cutIndex) {
   printf("Finished iterations\n ");
 
   while ( toPop > 0 ){
-    printf("Poping %c\n", inverse.top());
     inverse.pop();
     toPop--;
   }
@@ -94,7 +93,6 @@ int main(int argc, const char *argv[])
   while ( neededParts > 0 ){
 
     output += getCutPart(input, len - neededParts, &cutIndex);
-    printf("%d cut: %s", cutIndex,  output.c_str());
 
     input = input.substr(cutIndex + 1);
     len = input.length();
