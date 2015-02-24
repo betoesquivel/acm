@@ -17,7 +17,6 @@ string getCutPart(string s, int endIndex, int *cutIndex) {
   int min = 0, toPop = 0, minSize = 1;
   inverse.push(s[0]);
   for (int i = 1; i < endIndex; i++){
-    printf("Iteration %d, min %d\n", i, min);
     inverse.push(s[i]);
     toPop += 1;
 
@@ -29,7 +28,7 @@ string getCutPart(string s, int endIndex, int *cutIndex) {
       i += 1;
       // collect all contiguous equal chars
       while ( i < endIndex && s[i] == s[min] ){
-        inverse.push(s[0]);
+        inverse.push(s[i]);
         min = i;
         minSize++;
         i++;
@@ -42,7 +41,7 @@ string getCutPart(string s, int endIndex, int *cutIndex) {
       i += 1;
       // collect all contiguous equal chars
       while ( i < endIndex && s[i] == s[min] ){
-        inverse.push(s[0]);
+        inverse.push(s[i]);
         toPop++;
         tmp = i;
         tmpSize++;
@@ -57,16 +56,13 @@ string getCutPart(string s, int endIndex, int *cutIndex) {
       i -= 1;
 
     }
-    printf("Finished iteration %d, min %d, toPop %d\n", i, min, toPop);
 
   }
-  printf("Finished iterations\n ");
 
   while ( toPop > 0 ){
     inverse.pop();
     toPop--;
   }
-  cout << endl;
   while ( !inverse.empty() ){
     cut += inverse.top();
     inverse.pop();
